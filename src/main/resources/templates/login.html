@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>XINY</title>
+    <script src="//cdn.bootcss.com/angular.js/1.5.6/angular.min.js"></script>
+    <link rel="stylesheet" href="/css/login/login.css"/>
+    <link rel="stylesheet" href="/css/login/bootstrap.css"/>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        var app = angular.module('login', []);
+        app.controller('LoginController', function ($rootScope, $scope, $http) {
+            $scope.message = '';
+            $scope.userName = '';
+            $scope.password = '';
+            //登录
+            $scope.login = function () {
+                $scope.message = '';
+                $http(
+                    {
+                        url: '/login',
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            userName: $scope.userName,
+                            password: $scope.password
+                        }
+                    }).success(function (data) {
+                        if(data.code !=200){
+                            $scope.msg = data.msg;
+                            alert($scope.msg);
+                            return;
+                        }
+                    window.location.href = '/';
+                }).error(function (data) {
+                });
+            }
+        });
+        /*]]>*/
+    </script>
+</head>
+<body ng-app="login" ng-controller="LoginController">
+<!--<div>-->
+<!--<div align="center" style="margin-top: 100px">-->
+<!--<img  src="/image/top.jpg"/>-->
+<!--</div>-->
+<!--<div class="dframe">-->
+<!--<div>-->
+<!--<form>-->
+<!--<div>-->
+<!--<input type="text" ng-model="userName" required placeholder="11 位手机号 或 Email"/>-->
+<!--</div>-->
+<!--<div>-->
+<!--<input type="password" ng-model="password" required placeholder="密码"/>-->
+<!--</div>-->
+<!--<input type="button" value="登录" ng-click="login()" />-->
+
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<main class="auth-main">
+    <div class="auth-block">
+        <h1>Sign in to XINY</h1>
+        <a href="register" class="auth-link">没有账号? 点我注册!</a>
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">账号</label>
+
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputEmail3" ng-model="userName" placeholder="输入账号">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword3" ng-model="password"
+                           placeholder="输入密码">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default btn-auth" ng-click="login()">登陆</button>
+                    <a href class="forgot-pass">忘记密码?</a>
+                </div>
+            </div>
+        </form>
+
+        <div class="auth-sep"><span><span>or Sign in with one click</span></span></div>
+
+        <div class="al-share-auth">
+            <ul class="al-share clearfix">
+                <li><i class="socicon socicon-facebook" title="Share on Facebook"></i></li>
+                <li><i class="socicon socicon-twitter" title="Share on Twitter"></i></li>
+                <li><i class="socicon socicon-google" title="Share on Google Plus"></i></li>
+            </ul>
+        </div>
+    </div>
+</main>
+</body>
+</html>
