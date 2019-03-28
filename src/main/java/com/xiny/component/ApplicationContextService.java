@@ -15,14 +15,18 @@ public class ApplicationContextService implements ApplicationContextAware {
     /**
      * 上下文对象实例
      */
-    private ApplicationContext applicationContext;
+    private static ApplicationContext applicationContext;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+    public void setApplicationContext(ApplicationContext applicationContext){
+        setContext(applicationContext);
     }
 
-    public ApplicationContext getApplicationContext() {
+
+    public static void setContext(ApplicationContext applicationContext) throws BeansException {
+        ApplicationContextService.applicationContext = applicationContext;
+    }
+
+    public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
 
@@ -32,7 +36,7 @@ public class ApplicationContextService implements ApplicationContextAware {
      * @param name
      * @return
      */
-    public Object getBean(String name){
+    public static Object getBean(String name){
         return applicationContext.getBean(name);
     }
 
